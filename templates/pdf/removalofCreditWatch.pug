@@ -1,0 +1,321 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Removal of Credit Watch
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+      padding: 1rem;
+    }
+    .header > p {
+      font-size: 0.9rem;
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    .data, .rated-facilities{
+      line-height: 1.5rem;
+    }
+    .disclaimer{
+      line-height: 1rem;
+      border: 1px solid black;
+      margin: 1rem 0.5rem;
+      font-size: 0.8rem;
+      padding: 0.4rem;
+    }
+
+body 
+  - const moment = require("moment")
+  main
+    section(class="header") 
+      h4 Date: #{moment(data.removal_credit_watch_data[0].rating_letter_date).format("Do MMMM YYYY")}    
+      br
+      b To,
+      br
+      b Mr Arun Kumar Singh, Chief Executive Officer
+      br
+      b M/s. #{data.removal_credit_watch_data[0].company_name}
+      p #{data.removal_credit_watch_data[0].address_1}
+      br
+      p(style="text-align: center")
+        strong Review of rating of the bank facilities of #{data.removal_credit_watch_data[0].company_name}
+      br
+      p(style="line-height: 1.5rem") After taking into account all the recent developments, including operational and financial performance of your company for FYxx (audited/provisional) and Q1FYxx/H1FYxx/9MFYxx, our Rating Committee has reviewed the following ratings:
+    section(class="data")
+      div(class="table-div")
+        table 
+          thead 
+            tr 
+              th Instrument / Facility 
+              th Amount (Rs. Crore)
+              th Current Ratings 
+              th Previous Ratings 
+              th Rating Action 
+          tbody
+            each rating, key in data.removal_credit_watch_data
+              tr  
+                td #{rating.category_text} 
+                td #{rating.instrument_size_number} 
+                td #{rating.rating} 
+                td #{rating.previous_rating} 
+                td #{rating.rating_action} 
+            tr
+              td(style="font-weight: 600") Total
+              td(style="font-weight: 600; text-transform: capitalize; " class="total") #{data.sum_in_rated_facilities[0].total}
+              td
+              td 
+              td 
+      p 2. Details of the credit facilities are attached in Annexure I. Our rating symbols for long-term and short-term ratings and explanatory notes there on are attached in Annexure II.
+      p 3. The press release / rationale for the rating will be communicated to you shortly.
+      p 4. The above rating is valid for a period of one year from the date of our initial communication of rating to you i.e  
+        strong 14th June 2021 and our annual surveillance shall fall due on 14th June 2022..  
+      p 5. A formal surveillance/review of the rating is conducted within 12 months from the date of initial rating/last review of the rating. However, INFOMERICS reserves the right to undertake a surveillance/review of the rating more than once a year if in the opinion of INFOMERICS, circumstances warrant such surveillance/review.
+      p 6. This is to mention that all the clauses mention in the initial rating letter are also stands applicable. 
+      p 7. In case you require any clarification, you are welcome to communicate with us in this regard.
+      br
+      br
+      p Thanking You
+      p With Regards,
+      br
+      div(style="display: flex; justify-content: space-between;margin: 0 1rem") 
+        div  
+          p 
+            strong #{data.removal_credit_watch_data[0].rating_analyst}
+          p Rating Analyst
+          a(href="mailto:nds@Infomerics.com" target="_blank" rel="noreferrer") #{data.removal_credit_watch_data[0].rating_analyst_email}
+        div 
+          p 
+            strong #{data.removal_credit_watch_data[0].group_head}
+          p Assistant Vice President
+          a(href="mailto:nds@Infomerics.com" target="_blank" rel="noreferrer") #{data.removal_credit_watch_data[0].group_head_email} 
+    p(class="disclaimer")
+      strong Disclaimer:  
+      | Infomerics ratings are based on information provided by the issuer on an ‘as is where is’ basis. Infomerics credit ratings are an opinion on the credit risk of the issue / issuer and not a recommendation to buy, hold or sell securities.  Infomerics reserves the right to change, suspend or withdraw the credit ratings at any point in time. Infomerics ratings are opinions on financial statements based on information provided by the management and information obtained from sources believed by it to be accurate and reliable. The credit quality ratings are not recommendations to sanction, renew, disburse or recall the concerned bank facilities or to buy, sell or hold any security. We, however, do not guarantee the accuracy, adequacy or completeness of any information which we accepted and presumed to be free from misstatement, whether due to error or fraud. We are not responsible for any errors or omissions or for the results obtained from the use of such information. Most entities whose bank facilities/instruments are rated by us have paid a credit rating fee, based on the amount and type of bank facilities/instruments. In case of partnership/proprietary concerns/Association of Persons (AOPs), the rating assigned by Infomerics is based on the capital deployed by the partners/proprietor/ AOPs and the financial strength of the firm at present. The rating may undergo change in case of withdrawal of capital or the unsecured loans brought in by the partners/proprietor/ AOPs in addition to the financial performance and other relevant factors.
+    section(class="rated-facilities") 
+      p(style="text-align: center")
+        u
+          strong Annexure I
+      p
+        strong Details of Rated Facilities: 
+      div(class="rating-facilities-data")
+        p(style="margin: 1rem 0.4rem") 
+          b 1. Long Term/Short Term: Fund Based Facilities
+        div(class="table-div")
+          table 
+            thead 
+              tr 
+                th Sr. No.
+                th Name of Bank
+                th Type of Facility 
+                th Amount 
+                th Tenure 
+            tbody        
+              each rating_facility, key in data.long_short_term_fund_facilites
+                tr 
+                  td  #{key + 1}.
+                  td #{rating_facility.name}  
+                  td #{rating_facility.instrument_text}  
+                  td #{rating_facility.instrument_size_number}  
+                  td #{rating_facility.tenure ? rating_facility.tenure : "-"}  
+              tr(class="total")
+                td
+                td(style="font-weight: 600") Total
+                td 
+                td(style="font-weight: 600; text-transform: capitalize; " class="fund_based_amount") #{data.sum_in_rated_facilities[0].total}
+                td 
+        p(style="margin: 1.5rem 0.4rem") 
+          b 2. Short Term Facilities - Non fund-Based Limits:
+        div(class="table-div")
+          table 
+            thead 
+              tr 
+                th Sr. No.
+                th Name of Bank
+                th Type of Facility 
+                th Amount 
+                th Tenure 
+            tbody        
+              each rating_facility, key in data.short_term_non_fund_facilites
+                tr 
+                  td  #{key + 1}.
+                  td #{rating_facility.name}  
+                  td #{rating_facility.instrument_text}  
+                  td #{rating_facility.instrument_size_number}  
+                  td #{rating_facility.tenure ? rating_facility.tenure : "-"}  
+              tr(class="total")
+                td
+                td(style="font-weight: 600") Total
+                td 
+                td(style="font-weight: 600; text-transform: capitalize; " class="non_fund_based_amount") #{data.sum_in_rated_facilities_short_term[0].total}
+                td 
+      div 
+        p(style="text-align: center")   
+          u 
+            b ANNEXURE II  
+        p(style="text-align: center") 
+          b INFOMERICS Rating Scale for Long Term Instruments & Borrowing Programmes
+        div(class="table-div")
+          table 
+            thead
+              tr  
+                th Rating Scale
+                th Definition
+            tbody
+              each rating_scale in data.lt_bp_annexure 
+                tr 
+                  td #{rating_scale.rating_scale}
+                  td #{rating_scale.definition}
+      section(style="margin-top: 1rem") 
+        i INFOMERICS may apply '+' (plus) signs for ratings assigned from ‘IVR A1' to ‘IVR A4' to indicate their relative standing within the category.
+        br
+        br      
+        p(style="text-align: center") 
+          b INFOMERICS Rating Scale for Short Term Instruments & Borrowing Programmes
+        div(class="table-div")
+          table 
+            thead
+              tr  
+                th Rating Scale
+                th Definition
+            tbody
+              each rating_scale in data.st_bp_annexure 
+                tr 
+                  td #{rating_scale.rating_scale}
+                  td #{rating_scale.definition}
+      section(style="margin-top: 1rem") 
+        i INFOMERICS may apply '+' (plus) signs for ratings assigned from ‘IVR A1' to ‘IVR A4' to indicate their relative standing within the category.
+        br
+        br
+                
+script().
+
+  let reviewedRating = document.querySelector(".total")
+  let fundBasedFacilities = document.querySelector(".fund_based_amount")
+  let nonFundBasedFacilities = document.querySelector(".non_fund_based_amount")
+  let reviewdRatingData = !{JSON.stringify(table_data)}
+  let fundBasedRatingFacilitiesData = !{JSON.stringify(rating_facilities_fund_based_data)}
+  let nonFundBasedRatingFacilitiesData = !{JSON.stringify(rating_facilities_non_fund_based_data)}
+  let reviewedRatingTotal = 0
+  let fundBasedFacilitiesTotal = 0
+  let nonFundBasedFacilitiesTotal = 0
+  for (let i = 0; i < reviewdRatingData.length; i++) {
+    reviewedRatingTotal += Number(reviewdRatingData[i].amount)
+  }
+  for (let i = 0; i < fundBasedRatingFacilitiesData.length; i++) {
+    fundBasedFacilitiesTotal += Number(fundBasedRatingFacilitiesData[i].amount)
+  }
+  for (let i = 0; i < nonFundBasedRatingFacilitiesData.length; i++) {
+    nonFundBasedFacilitiesTotal += Number(nonFundBasedRatingFacilitiesData[i].amount)
+  }
+
+  reviewedRating.innerText = reviewedRatingTotal.toFixed(2)
+  fundBasedFacilities.innerText = fundBasedFacilitiesTotal.toFixed(2)
+  nonFundBasedFacilities.innerText = nonFundBasedFacilitiesTotal.toFixed(2)
+  
+  //- function number2text(value) {
+  //-   var fraction = Math.round(frac(value)*100);
+  //-   var f_text  = "";
+
+  //-   if(fraction > 0) {
+  //-       f_text = "AND "+convert_number(fraction)+" PAISE";
+  //-   }
+
+  //-   return convert_number(value)+" RUPEE "+f_text+" ONLY";
+  //- }
+
+  //- function frac(f) {
+  //-     return f % 1;
+  //- }
+
+  //- function convert_number(number){
+  //-     if ((number < 0) || (number > 999999999)) 
+  //-     { 
+  //-         return "NUMBER OUT OF RANGE!";
+  //-     }
+  //-     var Gn = Math.floor(number / 10000000);  /* Crore */ 
+  //-     number -= Gn * 10000000; 
+  //-     var kn = Math.floor(number / 100000);     /* lakhs */ 
+  //-     number -= kn * 100000; 
+  //-     var Hn = Math.floor(number / 1000);      /* thousand */ 
+  //-     number -= Hn * 1000; 
+  //-     var Dn = Math.floor(number / 100);       /* Tens (deca) */ 
+  //-     number = number % 100;               /* Ones */ 
+  //-     var tn= Math.floor(number / 10); 
+  //-     var one=Math.floor(number % 10); 
+  //-     var res = ""; 
+
+  //-     if (Gn>0) 
+  //-     { 
+  //-         res += (convert_number(Gn) + " CRORE"); 
+  //-     } 
+  //-     if (kn>0) 
+  //-     { 
+  //-             res += (((res=="") ? "" : " ") + 
+  //-             convert_number(kn) + " LAKH"); 
+  //-     } 
+  //-     if (Hn>0) 
+  //-     { 
+  //-         res += (((res=="") ? "" : " ") +
+  //-             convert_number(Hn) + " THOUSAND"); 
+  //-     } 
+
+  //-     if (Dn) 
+  //-     { 
+  //-         res += (((res=="") ? "" : " ") + 
+  //-             convert_number(Dn) + " HUNDRED"); 
+  //-     } 
+
+
+  //-     var ones = Array("", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX","SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN","FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN","NINETEEN"); 
+  //- var tens = Array("", "", "TWENTY", "THIRTY", "FOURTY", "FIFTY", "SIXTY","SEVENTY", "EIGHTY", "NINETY"); 
+
+  //-     if (tn>0 || one>0) 
+  //-     { 
+  //-         if (!(res=="")) 
+  //-         { 
+  //-             res += " AND "; 
+  //-         } 
+  //-         if (tn < 2) 
+  //-         { 
+  //-             res += ones[tn * 10 + one]; 
+  //-         } 
+  //-         else 
+  //-         { 
+
+  //-             res += tens[tn];
+  //-             if (one>0) 
+  //-             { 
+  //-                 res += ("-" + ones[one]); 
+  //-             } 
+  //-         } 
+  //-     }
+
+  //-     if (res=="")
+  //-     { 
+  //-         res = "zero"; 
+  //-     } 
+  //-     return res;
+  //- }
+    

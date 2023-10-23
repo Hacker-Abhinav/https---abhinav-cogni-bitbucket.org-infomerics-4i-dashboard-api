@@ -1,0 +1,114 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Rejection Of Representation Rating Letter
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    section {
+      margin: 0 1.5rem;
+      line-height: 1.5rem;
+    }
+    main, footer {
+      font-style: italic;
+    }
+    main > p {
+      line-height: 1.5rem;
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+     table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    footer{
+      margin: 0 1rem;
+    }
+
+
+body 
+  header 
+    section 
+      h1 Rejection of Representation Rating Letter 
+      br
+      p(style="margin-bottom: 6rem") Shri/Ms.
+  main
+    section 
+      p(style="text-align: center; margin-top: 2rem") 
+        strong 
+          u Confidential
+      p Dear Sir/Madam,
+      p(style="text-align: center; margin-top: 2rem") 
+        strong 
+          u Credit rating for bank facilities
+      p(style="width: 80%; margin: 0 auto 2rem auto;") Please refer to our provisional communication/Rating letter [I1] dated #{data.mandate_date[0].mandate_date}, and your representation Letter/Email dated Month, 20XX on the above subject.
+      p 1. The representation made by you was placed before the Reviewing authority as per the policy of the Company. However,  on  carefully examining  the representation made by you regarding the revision in Credit rating assigned, the committee has not observed any material information which can impact the rating already assigned. Therefore we regret to inform you that the rating assigned to you as under remains unchanged.
+    div(class="table-div")
+      table 
+        thead 
+          tr 
+            th Facilities
+            th(style="text-align: center") Amount (Rs. Crore)
+            th(style="text-align: center") Ratings
+            th(style="text-align: center") Rating Action 
+        tbody
+          each item, key in data.rejection_of_representation     
+            tr 
+              td #{item.category_text}
+              td(style="text-align: center") #{item.instrument_size_number}
+              td(style="text-align: center") #{item.rating}
+              td(style="text-align: center") #{item.rating_action}
+          tr(class="total")
+              td(style="font-weight: 600") Total
+              td(style="font-weight: 600; text-transform: capitalize; text-align: center;" class="total_amount") 
+                if data.sum_in_rated_facilities.length > 0
+                  | #{data.sum_in_rated_facilities[0].total}
+                  | #{total}
+                else
+                  | -
+              td
+              td 
+              td
+    section 
+      p 2. Our rating symbols for long-term and short-term ratings and explanatory notes thereon are annexed in
+        b Annexure I.
+      p 3. 
+        b In this connection, we assure you that the facts mentioned in your letter under reference were considered while deciding the rating (s).
+      p It may please be noted that this is a 
+        b provisional communication 
+        | made to you for your conveying the acceptance of the aforesaid rating and this communication cannot be used by you for any purpose. The final rating communication shall be sent to you soon after the acceptance of the aforesaid rating is conveyed to us.
+      p 5. Please send us your acceptance for the aforesaid rating assigned in writing as per the attached 
+        b Annexure II within a period of five days from the date of this communication to enable us to issue the final rating letter.
+        | Please note that the rating shall not be used for any purpose whatsoever if the rating is not accepted and communicated to us as per the prescribed format as aforesaid.
+      p 6. However, in case you still choose not to accept the rating assigned,  Infomerics is entitled to disseminate the rating in its website as “Unaccepted’ within a 
+        b period of one month from the date of the provisional communication already conveyed to you.
+  footer 
+    p We thank you for the opportunity given to us to serve you.
+    br
+    p With regards,
+    br
+    br
+    p 
+      b (Name): #{data.rejection_of_representation[0].company_contact}
+    p Designation: #{data.rejection_of_representation[0].designation}
+    p Email: #{data.rejection_of_representation[0].email}

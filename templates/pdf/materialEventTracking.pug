@@ -1,0 +1,63 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No
+          th Company
+          th Mandate ID
+          th Investment/Non Investment Grade
+          th Press Release Date
+          th Rating Assigned
+          th Status
+          th Reason
+      tbody(class="tbody")
+        each company, key in data
+          tr
+            td #{key + 1} 
+            td #{company.name ? company.name : "-"}
+            td #{company.mandate_id}
+            td #{company.ig_nig}
+            td #{moment(company.press_release_date).format("DD/MM/YYYY")}
+            td #{company.rating}
+            td #{company.status}
+            td #{company.remarks}

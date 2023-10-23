@@ -1,0 +1,68 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+      font-size: 12px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No
+          th Company
+          th Mandate ID
+          th Mandate Received
+          th Category
+          th Size (in Cr.)
+          th Pending Days
+          th Expcted Date of Completion
+          th Status
+          th Remarks
+      tbody(class="tbody")
+        each company, key in data[0]
+          tr
+            td #{key + 1} 
+            td #{company.company_name}
+            td #{company.mandate_id}
+            td #{moment(company.received_date).format("DD/MM/YYYY")}
+            td #{company.mandate_type}
+            td(style="text-align: right;") #{company.total_size}
+            td #{company.pending_days}
+            td #{company.expected_date ? moment(company.expected_date).format("DD/MM/YYYY") : "-"}
+            td #{company.status}
+            td #{company.remarks}

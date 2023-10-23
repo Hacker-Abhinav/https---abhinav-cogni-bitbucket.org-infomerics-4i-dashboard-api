@@ -1,0 +1,70 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+      font-size: 10px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No.
+          th Client Name
+          th Company
+          th Instrument
+          th Rating Analyst
+          th Group Head
+          th Buisness Developer
+          th Rating Date
+          th Rating Assigned
+          th NDS Status
+          th Rating Status
+      tbody(class="tbody")
+        each company, key in data
+          tr
+            td #{key + 1} 
+            td #{company.client_name}
+            td #{company.company_name}
+            td #{company.instrument_text}
+            td #{company.rating_analyst}
+            td #{company.group_head}
+            td #{company.business_dev}
+            td #{moment(company.meeting_at).format("DD/MM/YYYY")}
+            td #{company.rating}
+            td #{company.is_active ? "Active" : "In Active"}
+            td #{company.rating_status}

@@ -1,0 +1,147 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Initial Rating Letter
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+      line-height: '1.5rem';
+    }
+    section{
+      margin: 0 1.5rem;
+    }
+    ol {
+      margin-left: 2rem;
+    }
+    p{
+
+    }
+    .letter-date{
+      text-align: right;
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+
+
+body 
+- const moment = require("moment")
+  main 
+    section
+      p Shri/Mr. #{data[0].company_contact}
+      p #{data[0].designation}
+      p #{data[0].company_name}
+      p #{data[0].address_1}
+      p(class="letter-date") #{moment(data.rating_letter_date).format('dddd, Do MMMM YYYY')}
+
+    section
+      p Dear Sir, 
+      strong Assignment of rating to the Bank facilities/NCD of #{data[0].company_name}/ Assignment of Issuer rating
+      p Please refer to the Mandate contract dated 
+        strong Month XX, 20XX
+        |  on the captioned subject and your letter/E-Mail dated
+        strong  Month XX, 20XX
+        |  accepting our rating & use thereof.
+      p 1. Our Rating Committee has assigned the following ratings:
+
+    div(class="table-div")
+      table 
+        thead 
+          tr 
+            th Instrument / Facility 
+            th Amount (Rs. Crore)
+            th Ratings 
+            th Rating Action 
+        tbody 
+            each company, key in data
+              tr 
+                
+                td 
+                  if company.is_short_term 
+                    | Short Term #{company.category_text}
+                  else if company.is_long_term 
+                    | Long Term #{company.category_text}
+                  else 
+                    | Long Term & Short Term #{company.category_text}
+
+                td #{company.instrument_size_number}
+                td #{company.rating}
+                td #{company.rating_action}
+    
+    section 
+      p 
+        | 2. Details of the credit facilities are attached in 
+        strong  Annexure I. 
+        | Our rating symbols for long-term and short-term ratings and explanatory notes thereon are attached in 
+        strong Annexure II.
+      p 3. The press release for the rating(s) will be communicated to you shortly.
+      p 4. If the proposed long term / short term facility (if any) is not availed within a period of six months / three months respectively from the date of this letter, then the rating may please be revalidated from us before availing the facility.
+      p 
+        | 5. The above rating is normally valid for a period of one year from the date of our 
+        strong initial communication
+        | of rating to you (that is. 
+        strong Month XX, 20XX). 
+      p 6. A formal surveillance/review of the rating is normally conducted within 12 months from the date of initial rating/last review of the rating. However, INFOMERICS reserves the right to undertake a surveillance/review of the rating more than once a year if in the opinion of INFOMERICS, circumstances warrant such surveillance/review.
+      p 7. Further in terms of the mandate executed with us, you have undertaken to comply with the following: -
+        ol(type="a") 
+          li Inform INFOMERICS before availing any new bank facility/ies and/or of any changes in the terms, conditions and/or size of the facilities rated.
+          li Furnish all material information and any other information in a timely manner as may be required by INFOMERICS, for monitoring the Rating assigned during the tenure of the bank facilities rated by INFOMERICS. 
+          li Co-operate with and enable INFOMERICS to arrive at and maintain a true and fair rating and in particular, provide INFOMERICS with true, adequate, accurate, fair, and timely information for the purpose.  
+          li Inform INFOMERICS, in writing and in a timely manner, of any other developments which may have a direct or indirect impact on the CLIENT’s debt servicing capability including any proposal for re-schedulement or postponement of the repayment programs of the dues/ debts of the CLIENT with any lender (s)/ investor (s) within seven days from the date of such developments/ proposal. 
+      p 8. 
+        strong You shall provide us a No Default Statement as at the last date of the month on the first date of succeeding month without fail.
+        | The NDS shall be mailed every month to 
+        a(href="mailto:nds@Infomerics.com" target="_blank" rel="noreferrer") nds@Infomerics.com 
+        | and to the mail id of the undersigned.
+      p 
+        strong You shall provide the quarterly performance results/quarterly operational data   (being submitted to Banks) to us within 6 weeks from the close of each calendar quarter for our review/monitoring.
+      p 10. You shall furnish all material information and any other information called for by INFOMERICS in a timely manner, for monitoring the rating assigned by INFOMERICS. In the event of failure on your part in furnishing such information, to carry out continuous monitoring of the rating of the bank facilities, INFOMERICS shall carry out the review/annual surveillance on the basis of best available information throughout the lifetime of such bank facilities as per the policy of INFOMERICS.
+      p 11.  INFOMERICS reserves the right to withdraw/revise/reaffirm the rating assigned on the basis of new information. INFOMERICS is also entitled to publicise/disseminate such withdrawal/revision in the assigned rating in any manner considered appropriate by it, without reference to you.
+      p 12. Please note that INFOMERICS ratings are not recommendations to buy, sell or hold any security or to sanction, renew, disburse or recall the bank facilities. INFOMERICS do not take into account the sovereign risk, if any, attached to the foreign currency loans, and the ratings are applicable only to the rupee equivalent of these loans.
+      p 13. In case you require any clarification, you are welcome to communicate with us in this regard.
+      br
+      p Thanking you,
+      p With Regards,
+      br
+      div(style="display: flex; justify-content: space-between;") 
+        div  
+          p 
+            strong (Name)
+          p Designation 
+          p Email: 
+        div 
+          p 
+            strong (Name)
+          p Designation 
+          p Email:
+      br
+      br
+    p(style="border: 1px solid black; margin: 0 1rem; font-size: 0.8rem")
+      strong Disclaimer:  
+      | Infomerics ratings are based on information provided by the issuer on an ‘as is where is’ basis. Infomerics credit ratings are an opinion on the credit risk of the issue / issuer and not a recommendation to buy, hold or sell securities.  Infomerics reserves the right to change, suspend or withdraw the credit ratings at any point in time. Infomerics ratings are opinions on financial statements based on information provided by the management and information obtained from sources believed by it to be accurate and reliable. The credit quality ratings are not recommendations to sanction, renew, disburse or recall the concerned bank facilities or to buy, sell or hold any security. We, however, do not guarantee the accuracy, adequacy or completeness of any information which we accepted and presumed to be free from misstatement, whether due to error or fraud. We are not responsible for any errors or omissions or for the results obtained from the use of such information. Most entities whose bank facilities/instruments are rated by us have paid a credit rating fee, based on the amount and type of bank facilities/instruments. In case of partnership/proprietary concerns/Association of Persons (AOPs), the rating assigned by Infomerics is based on the capital deployed by the partners/proprietor/ AOPs and the financial strength of the firm at present. The rating may undergo change in case of withdrawal of capital or the unsecured loans brought in by the partners/proprietor/ AOPs in addition to the financial performance and other relevant factors.
+
+
+
+            

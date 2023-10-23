@@ -1,0 +1,161 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+      font-size: 12px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  
+  each risk in data.risk_details
+    div(class='table-div')
+      table
+        thead
+          tr 
+            th(colspan="2" class="main-table-heading") 
+              b  Rating Model (#{data.rating_model_name})
+          tr 
+            th 
+              b Parameter Name : #{risk.parameter_name}
+            th 
+              b 
+                Company Name : #{data.company_name}
+          tr 
+            th 
+              b Instrument Type : #{risk.intrument_type}
+            th 
+              b Company Industry : #{data.company_industry}
+          tr 
+            th(colspan="2") Latest Annual Turnover (Rs. in crore) : #{data.turnover}
+    
+    each factors_detail in risk.factors_details 
+      div(class='table-div')
+      table
+        thead
+          tr 
+            th Sr. no
+            th(colspan="7") Questions
+            th Assigned Score
+            th Max Score
+          tbody(class="tbody")
+            each factor in factors_detail.factors
+              tr
+                td #{factor.sequence_no}
+                td(colspan="7") #{factor.question}
+                td 
+                td
+              tr
+                if factor.parameters
+                  td 
+                  - for(let i = 0; i<= 6; i++)
+                    if i <= factor.parameters.length-1
+                      td #{factor.parameters[i].factor_parameter}
+                    else 
+                      td
+                td 5.0
+                td 7
+
+  div(class='table-div')
+    table
+      thead
+        tr 
+          th(colspan="2" class="main-table-heading") 
+            b  Rating Model (#{data.rating_model_name})
+        tr 
+          th 
+            b Parameter Name : Rating Sheet
+          th 
+            b 
+              Company Name : #{data.company_name}
+        tr 
+          th 
+            b Instrument Type : #{data.instrument_type}
+          th 
+            b Company Industry : #{data.company_industry}
+        tr 
+          th(colspan="2") Latest Annual Turnover (Rs. in crore) : #{data.turnover}
+        
+   
+  div(class='table-div')
+    table
+      thead
+        tr 
+          th Parameters
+          th Score %
+          th Weights (%)
+      tbody(class="tbody")
+        each rating in data.rating_sheet
+          tr
+            td #{rating.risk_type} 
+            td #{rating.weightage}
+            td #{rating.score.toFixed(2)}
+        tr 
+          td Total Weights
+          td
+          td #{data.rating_model.total_weights}
+        tr 
+          td Weighted Score
+          td
+          td #{data.rating_model.weighted_score}
+
+    div(class='table-div')
+      table
+        tbody(class="tbody")
+          tr
+            td Model based Long Term Rating 
+            td 
+            td #{data.rating_model.model_based_long_term_rating}
+          tr
+            td Mapped Short Term Rating
+            td 
+            td #{data.rating_model.model_based_short_term_rating}
+          tr
+            td Final Long Term Rating Recommended 
+            td 
+            td #{data.rating_model.proposed_long_term_rating}
+          tr
+            td Final Long Term Rating Reason 
+            td 
+            td #{data.rating_model.model_based_long_term_rating}
+          tr
+            td Final Short Term Rating Recommended
+            td 
+            td #{data.rating_model.proposed_short_term_rating}
+          tr
+            td Outlook
+            td 
+            td #{data.rating_model.proposed_outlook}
+            

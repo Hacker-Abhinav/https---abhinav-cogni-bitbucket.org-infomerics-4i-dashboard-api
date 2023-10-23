@@ -1,0 +1,83 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No.
+          th Company
+          th Anniversary Date
+          th Expected Date
+          th Revised Expected Date
+          th Status
+          th Remarks
+      tbody(class="tbody")
+        each company, key in data
+          tr
+            td #{key + 1} 
+            td #{company.company}
+            td #{company.anniversary_date ? moment(company.anniversary_date).format("YYYY/MM/DD")  : "-"}
+            td #{company.expected_date ? moment(company.expected_date).format("YYYY/MM/DD") : "-"}
+            td #{company.revised_expected_date ? moment(company.revised_expected_date).format("YYYY/MM/DD") : "-"}
+            td #{company.status}
+            td #{company.remarks}
+            //- td(style="padding: 0" class="td")
+            //-   table(style="border: none;") 
+            //-     tbody
+            //-       each instrument, key in company.instruments
+            //-         if key === company.instruments.length - 1
+            //-           tr
+            //-             td(style="border: 0;") #{instrument.type ? instrument.type : "-" }
+            //-         else  
+            //-           tr
+            //-             td(style="border: 0;border-bottom: 1px solid black") #{instrument.type ? instrument.type : "-" }
+            //- td(style="padding: 0" class="td")
+            //-   table(style="border: none") 
+            //-     tbody
+            //-       each instrument, key in company.instruments
+            //-         if key === company.instruments.length - 1
+            //-           tr
+            //-             td(style="border: 0;") #{instrument.size ? instrument.size.toFixed(2) : "-" }
+            //-         else  
+            //-           tr
+            //-             td(style="border: 0;border-bottom: 1px solid black") #{instrument.size ? instrument.size.toFixed(2) : "-" }
+            //- td #{moment(company.anniversary_date).format("DD/MM/YYYY")}
+            //- td #{company.reason_for_delay}

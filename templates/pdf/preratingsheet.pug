@@ -1,0 +1,120 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Rating Sheet Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "cambria";
+      font-size: 11pt;
+    }
+    .ql-align-center{
+      text-align: center;
+    } 
+    u{
+      font-weight: 600;
+    }
+    .ql-align-justify{
+      margin: -1rem 1rem -1rem 1rem;
+    }
+    .rating-sheet-details{
+      width: 90%;
+      display: block;
+      margin: auto;
+      font-weight: 600
+    }
+    p {
+      color: #111;
+    }
+    .table-div{
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    .entity-name{
+      font-weight: 600;
+    }
+    .date{
+      margin: 1rem 2rem;
+      font-weight: 600;
+    }
+    
+
+body 
+  - const moment = require("moment")
+  p(class="ql-align-center")
+    u Rating Sheet 
+  br
+  br
+  p(class="ql-align-justify")
+    span(class="rating-sheet-details")
+      |  Rating Sheet for the 
+      span(class="current_meet")
+      |  Rating Committee Meeting (RCM) for the Financial Year #{moment(data.docs_data[0].instruments[0].meeting_at).format('YYYY')} - #{moment(data.docs_data[0].instruments[0].meeting_at).add(1, 'year').format('YYYY')}  of Infomerics Valuation and Rating Private Limited to be held on !{moment(data.docs_data[0].instruments[0].meeting_at).format('dddd, Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)} at #{moment(data.docs_data[0].instruments[0].meeting_at).format('hh:mm A')} through #{data.docs_data[0].instruments[0].meeting_type == "Virtual" ? "video" : data.docs_data[0].instruments[0].meeting_type} conference. 
+  br
+  div(class='table-div') 
+    table
+      thead
+        tr  
+          th Sr. No
+          th Name of the Entity
+          th Instrument / Facility
+          th Size (Rs. crore)
+          th Nature of Assignment
+          th Existing Rating 
+          th Proposed Rating 
+      tbody
+        each company, key in data.docs_data 
+          tr
+            td(class="entity-name" rowspan= company.instruments.length + 1) #{key+1}.
+            td(class="entity-name" rowspan= company.instruments.length + 1)= company.entity_name
+          each instrument in company.instruments
+            tr
+              td= instrument.instrument ? instrument.instrument : "NA" 
+              td(style="text-align: right")= instrument.size_in_crore ? instrument.size_in_crore.toFixed(2) : "NA" 
+              td= instrument.nature_of_assignment ? instrument.nature_of_assignment : "NA" 
+              td= instrument.existing_rating ? instrument.existing_rating : "NA" 
+              td= instrument.proposed_rating ? instrument.proposed_rating : "NA" 
+   
+  p(class="date") Date:  !{moment(data.docs_data[0].instruments[0].meeting_at).format('Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)}
+
+
+
+script().
+  let current_meet = document.querySelector(".current_meet")
+  let meet_id = !{data.docs_data[0].instruments[0].rating_committee_meeting_id}
+  const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+
+  const suffixes = new Map([
+    ["one", "st"],
+    ["two", "nd"],
+    ["few", "rd"],
+    ["other", "th"],
+  ]);
+  const formatOrdinals = (n) => {
+    const rule = pr.select(n);
+    const suffix = suffixes.get(rule);
+    return `${n}<sup>${suffix}</sup>`;
+  };
+  current_meet.innerHTML = formatOrdinals(meet_id)
+
+
+

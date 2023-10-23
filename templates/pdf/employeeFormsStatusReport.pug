@@ -1,0 +1,77 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    
+
+body 
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No
+          th Name of Employee
+          th Employee Code
+          th Form Name
+          th Form Status
+        
+      tbody(class="tbody")
+        each item, key in data
+          tr
+            td #{key + 1} 
+            td #{item.full_name}
+            td #{item.employee_code}
+            td(style="padding: 0" class="td")
+              table(style="border: none;") 
+                tbody
+                  each form_data, key in item.form_data
+                    if key === item.form_data.length - 1
+                      tr
+                        td(style="border: 0;") #{form_data.form_name ? form_data.form_name : "-" }
+                    else  
+                      tr
+                        td(style="border: 0;border-bottom: 1px solid black") #{form_data.form_name ? form_data.form_name : "-" }
+            td(style="padding: 0" class="td")
+              table(style="border: none;") 
+                tbody
+                  each form_data, key in item.form_data
+                    if key === item.form_data.length - 1
+                      tr
+                        td(style="border: 0;") #{form_data.form_status ? form_data.form_status : "-" }
+                    else  
+                      tr
+                        td(style="border: 0;border-bottom: 1px solid black") #{form_data.form_status ? form_data.form_status : "-" }
+           
+  

@@ -1,0 +1,62 @@
+const lt_bp_annexure = [
+    {
+        rating_scale: "IVR AAA",
+        definition: "Instruments with this rating are considered to offer the highest degree of safety regarding timely servicing of financial obligations. Such issuers carry lowest credit risk."
+    },
+    {
+        rating_scale: "IVR AA",
+        definition: "Instruments with this rating are considered to offer high degree of safety regarding timely servicing of financial obligations. Such issuers carry very low credit risk."
+    },
+    {
+        rating_scale: "IVR A",
+        definition: "Instruments with this rating are considered to offer adequate degree of safety regarding timely servicing of financial obligations. Such issuers carry low credit risk."
+    },
+    {
+        rating_scale: "IVR BBB",
+        definition: "Instruments with this rating are considered to offer moderate degree of safety regarding timely servicing of financial obligations. Such issuers carry moderate credit risk."
+    },
+    {
+        rating_scale: "IVR BB",
+        definition: "Instruments with this rating are considered to offer moderate risk of default regarding timely servicing of financial obligations."
+    },
+    {
+        rating_scale: "IVR B",
+        definition: "Instruments with this rating are considered to offer high risk of default regarding timely servicing of financial obligations."
+    },
+    {
+        rating_scale: "IVR C",
+        definition: "Instruments with this rating are considered to offer very high risk of default regarding timely servicing of financial obligations."
+    },
+    {
+        rating_scale: "IVR D",
+        definition: "Instruments with this rating are in default or are expected to be in default soon in servicing of debt obligations."
+    }
+]
+
+const st_bp_annexure = [
+    {
+        rating_scale: "IVR A1",
+        definition: "Instruments with this rating are considered to have very strong degree of safety regarding timely payment of financial obligations. Such instruments carry lowest credit risk."
+    },
+    {
+        rating_scale: "IVR A2",
+        definition: "Instruments with this rating are considered to have strong degree of safety regarding timely payment of financial obligations. Such instruments carry low credit risk."
+    },
+    {
+        rating_scale: "IVR A3",
+        definition: "Instruments with this rating are considered to have moderate degree of safety regarding timely payment of financial obligations. Such instruments carry higher credit risk as compared to instruments rated in the two higher categories."
+    },
+    {
+        rating_scale: "IVR A4",
+        definition: "Instruments with this rating are considered to have minimal degree of safety regarding timely payment of financial obligations. Such instruments carry very high credit risk and are susceptible to default."
+    },
+    {
+        rating_scale: "IVR AD",
+        definition: "Instruments with this rating are in default or expected to be in default on maturity in servicing of debt obligations."
+    }
+]
+
+module.exports = {
+    lt_bp_annexure,
+    st_bp_annexure
+}

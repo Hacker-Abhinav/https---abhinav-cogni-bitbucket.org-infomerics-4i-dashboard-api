@@ -1,0 +1,80 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Agenda Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial';
+    }
+    .table-div{
+      overflow-x: auto;
+      margin: 1rem
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    thead {
+      color: #111;
+      height: 25px;
+    }
+    .main-table-heading{
+      text-align: center ;
+    }
+    th, td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 4px;
+      font-size: 8px;
+    }
+    
+
+body 
+  - const moment = require('moment')
+  div(class='table-div') 
+    table
+      thead
+        tr 
+          th S. No.
+          th Company
+          th Committee Meeting Date
+          th Other Rating Agency Name
+          th Other Rating Agency Mandate Type
+          th Other Rating Agency Instrument Category
+          th Other Rating Agency Instrument Sub Category
+          th Other Rating Agency Instrument Name
+          th Other Rating Agency Outlook/Rating
+          th Quarterly Review Period
+          th Total number of NDS reveived
+          th Banker Feedback Received
+          th Quarterly Result Received
+          th Review Required
+          th Quarterly Review Process
+          th Status
+      tbody(class="tbody")
+        each company, key in data
+          tr
+            td #{key + 1} 
+            td #{company.company_name ? company.company_name : "-"}
+            td #{company.meeting_at ? moment(company.meeting_at).format("YYYY/MM/DD") : ""}
+            td #{company.ora_instrument_name}
+            td #{company.total_size}
+            td #{company.ora_mandate_type}
+            td #{company.ora_instrument_category}
+            td #{company.ora_instrument_subcategory_name}
+            td #{company.ora_outlook ? company.ora_outlook : "-" + "/" + company.ora_long_term_rating ? company.ora_long_term_rating : "-"}
+            td #{company.quarterly_review_period}
+            td #{company.total_nds_recv}
+            td #{company.banker_feedback_recv ? "Yes" : "No"}
+            td #{company.quarterly_result_received ? "Yes" : "No"}
+            td #{company.review_required ? "Yes" : "No"}
+            td #{company.quarterly_review_process ? "Yes" : "No"}
+            td #{company.status}

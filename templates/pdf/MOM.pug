@@ -1,0 +1,216 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title MOM Document
+  style.
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Times New Roman";
+      font-size: 11pt;
+    }
+    section {
+      margin: 0 1.5rem;
+    }
+
+    ol{
+      margin-left: 2rem
+    } 
+    .table-div{
+      margin: 1rem
+    }
+    table{
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      border-spacing: 0;
+    }
+    td{
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    .table-data{
+      font-weight: 600;
+    }
+    ul {
+      margin: 0 2.5rem;
+    }
+    ol > li, section:nth-of-type(2) > p, ul > li {
+      line-height: 2rem;
+    }
+    section:nth-of-type(2){
+     margin-top: 1.5rem;
+    }
+   
+body
+  main
+    section 
+    - const moment = require("moment")     
+    -
+      const formatOrdinals = (n) => {
+        const suffixes = new Map([
+          ["one", "st"],
+          ["two", "nd"],
+          ["few", "rd"],
+          ["other", "th"],
+        ]);
+        let pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+        const rule = pr.select(n);
+        const suffix = suffixes.get(rule);
+        return `${n}<sup>${suffix}</sup>`;
+      }
+    section 
+      p(style="padding-bottom: 1rem; margin-bottom: 0.2rem; width: 100%; margin-top: 1rem;" )
+        strong Minutes of   
+        |  !{formatOrdinals(data.docs_data[0].agenda_table_data_1[0].instruments[0].rating_committee_meeting_id)}  / #{moment(data.docs_data[0].agenda_table_data_1[0].instruments[0].meeting_at).subtract(1, 'year').format('YYYY')} - #{moment(data.docs_data[0].agenda_table_data_1[0].instruments[0].meeting_at).format('YYYY')} meeting of the Rating Committee duly convened on !{moment(data.docs_data[0].agenda_table_data_1[0].instruments[0].meeting_at).format('dddd, Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)} at #{moment(data.docs_data[0].agenda_table_data_1[0].instruments[0].meeting_at).format('hh:mm a')}  through #{data.docs_data[0].agenda_table_data_1[0].meeting_type[0] == "Virtual" ?  "video" : data.docs_data[0].agenda_table_data_1[0].meeting_type[0]} Conference.
+      p(style="border-bottom: 2px dashed #000; border-top: 2px dashed #000;padding: 0.1rem 0; width: 75%")
+      p(style="padding-top: 1rem; margin-top: 0.2rem;") 
+        u Rating Committee Members Present:
+      ol  
+        each member_present in rating_committee_members_present
+          li #{member_present.rating_committee_members_present}
+      br
+      p   
+        u Persons attended the RCM: 
+      ol 
+        each attended_person in data.persons_rcm
+          li #{attended_person.name}, #{attended_person.position}
+      br
+      p
+        i 
+          u Item No. 1
+      p
+        i 
+          u Chairman
+      p  
+        strong #{data.chairman}  
+        | was unanimously appointed as the Chairman of the meeting. The Chairman occupied the chair and declared the commencement of meeting after confirming the presence of the required quorum for the meeting.
+      p
+        i 
+          u Item No. 2
+      p
+        u Leave of Absence
+      p All Committee members were present at the meeting. 
+      p
+        i 
+          u Item No. 3: Agenda No. A 
+      if data.penultimate_meeting_details.length > 0
+        p   
+          u To confirm the minutes of 
+            span
+            | !{data.penultimate_meeting_details.length > 0 ?  formatOrdinals(data.penultimate_meeting_details[0].rating_committee_meeting_id)  : "Nil"}
+            |  RCM/ #{moment(data.docs_data[0].agenda_table_data_1[0].instruments.meeting_at).subtract(1, 'year').format('YYYY')} - #{moment(data.docs_data[0].agenda_table_data_1[0].instruments.meeting_at).format('YYYY')}  held on !{moment(data.penultimate_meeting_details[0].meeting_at).format('Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)}.      
+      else
+        p Nil
+      p The Minutes of the 
+        strong
+          span !{formatOrdinals(data.penultimate_meeting_details[0].rating_committee_meeting_id)}
+          |  RCM/ #{moment(data.docs_data[0].agenda_table_data_1[0].instruments.meeting_at).subtract(1, 'year').format('YYYY')} - #{moment(data.docs_data[0].agenda_table_data_1[0].instruments.meeting_at).format('YYYY')}  held on !{moment(data.penultimate_meeting_details[0].meeting_at).format('Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)}
+        |  were circulated to all the members vied email dated 
+        strong !{moment(data.penultimate_meeting_details[0].meeting_at).format('Do MMMM YYYY').replace(/(\d)(st|nd|rd|th)/g, `$1<sup>$2</sup>`)}
+        |  for confirmation and the same was confirmed by all the members through email.      
+      each row, key in agenda_table_data ? agenda_table_data : []
+       p
+        i 
+          u Item No. #{4 + key}: Agenda No. B#{key + 1}
+        p To consider the Rating Proposal of 
+          strong #{row.entity_name}.
+        h4 . Information relating to Rating Decision: 
+        div(class='table-div') 
+          table              
+            tr
+              td(class="") Name of the Rated Entity  
+                td(colspan="4" class="table-data") #{row.entity_name}
+            tr
+              td(class="") Nature of Instrument  
+              each item in row.agenda_table_data_1[0].instruments[0].instrument ? row.agenda_table_data_1[0].instruments[0].instrument : []
+                td(class="table-data") #{item}
+            tr
+              td(class="") Size (Rs. Crore)   
+              each size in row.agenda_table_data_1[0].size ? row.agenda_table_data_1[0].size : []
+                td(class="table-data") #{size ? size.toFixed(2) : "NA"}
+            tr
+              td(class="") Fresh Rating/ Surveillance 
+              each rating_process in row.agenda_table_data_1[0].rating_process ? row.agenda_table_data_1[0].rating_process : []
+                td(class="table-data") #{rating_process ? rating_process : "NA"}
+            tr
+              td(class="") Existing Rating
+              each existing_rating in row.agenda_table_data_1[0].existing_rating ? row.agenda_table_data_1[0].existing_rating : []
+                td(class="table-data") #{existing_rating ? existing_rating : "NA"}
+            tr
+              td(class="") Proposed Rating
+              each proposed_rating in row.agenda_table_data_1[0].proposed_rating ? row.agenda_table_data_1[0].proposed_rating : []
+                td(class="table-data") #{proposed_rating ? proposed_rating : "NA"}
+            tr
+              td(class="") Current Rating Assigned
+              each current_assigned_rating in row.agenda_table_data_1[0].current_assigned_rating ? row.agenda_table_data_1[0].current_assigned_rating : []
+                td(class="table-data") #{current_assigned_rating ? current_assigned_rating : "NA"}
+            tr
+              td(class="") Name of the Analyst
+              td(class="table-data" colspan="4") #{data.rating_analyst}       
+        br
+        
+        each point in minutes_points
+          | !{point.rating_analyst_points}
+        br
+        strong Post the presentation, the committee discussed the following issues:
+        br
+        each point in minutes_points
+          | !{point.post_presentation_committee_discussed_issue} 
+        br
+        strong Rating Analyst clarified the following points to the committee:
+        br
+        p The company has formed Foreign Exchange Risk Management Policy. As per policy recommended hedge ratio is as follows:
+        br
+      p
+        u Vote of Thanks
+      p The meeting concluded with a vote of thanks to the chair at 5:30 pm.
+        br
+        strong Dissent (if any) by any RCM member
+        each remark in dissent_remark
+          | - #{remark.dissent_remark ? remark.dissent_remark : "NA"}
+        br
+        br
+        br
+        br
+      div(style="display: flex;justify-content: space-between;")
+        div 
+          strong  Date: #{moment(date).format("DD/MM/YYYY")}
+          br
+          br
+          strong  Place: New Delhi
+        div 
+          strong #{data.chairman} 
+          br
+          br
+          strong Chairman
+
+
+
+
+script().
+  let current_meet = document.querySelector(".current_meet")
+  let last_meet = document.querySelector(".last_meet")
+  let meet_id = !{data.docs_data[0].agenda_table_data_1[0].instruments[0].rating_committee_meeting_id}
+  let last_meet_id = !{data.penultimate_meeting_details.length > 0 ? data.penultimate_meeting_details[0].rating_committee_meeting_id : []}
+  let pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+
+  const suffixes = new Map([
+    ["one", "st"],
+    ["two", "nd"],
+    ["few", "rd"],
+    ["other", "th"],
+  ]);
+  const formatOrdinals = (n) => {
+    const rule = pr.select(n);
+    const suffix = suffixes.get(rule);
+    return `${n}<sup>${suffix}</sup>`;
+  };
+  current_meet.innerHTML = formatOrdinals(meet_id)
+  last_meet.innerHTML = formatOrdinals(last_meet_id)
